@@ -95,7 +95,7 @@
     - name: Copy Index File
       template:
         src: "files/index-template.html"
-        dest: "/var/www/{{ http_host }}/index.html"
+        dest: "/var/www/html/index.html"
 
     - name: Set Up Virtual Host Configuration
       template:
