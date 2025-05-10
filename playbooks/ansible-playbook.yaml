@@ -17,6 +17,8 @@
 - name: PlayBook 2 - MySQL Setup
   hosts: Database-Servers
   become: true
+  vars_files:
+    - ../group_vars/all.yml
   tasks:
     - name: Install MySQL and Dependencies
       apt:
