@@ -68,6 +68,8 @@
 - name: PlayBook 3 - Apache Setup
   hosts: Apache-Servers
   become: true
+  vars_files:
+    - ../group_vars/all.yml
   tasks:
     - name: Install Apache Web Server
       apt:
