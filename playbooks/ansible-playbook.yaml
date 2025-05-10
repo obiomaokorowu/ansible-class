@@ -93,12 +93,12 @@
         mode: '0755'
 
     - name: Copy Index File
-      copy:
+      template:
         src: "index-template.html"
         dest: "/var/www/{{ http_host }}/index.html"
 
     - name: Set Up Virtual Host Configuration
-      copy:
+      template:
         src: "apache-template.conf"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
 
