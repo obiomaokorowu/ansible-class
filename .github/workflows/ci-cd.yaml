@@ -30,4 +30,4 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook playbooks/ansible-playbook.yml -i "${{ secrets.ANSIBLE_HOST }}," -u ubuntu
+          ansible-playbook playbooks/ansible-playbook.yaml -i "${{ secrets.ANSIBLE_HOST }}," -u ubuntu
