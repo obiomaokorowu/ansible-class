@@ -70,7 +70,6 @@
   become: true
   vars_files:
     - ../group_vars/all.yml
-    - ../files/
   tasks:
     - name: Install Apache Web Server
       apt:
@@ -94,12 +93,12 @@
         mode: '0755'
 
     - name: Copy Index File
-      template:
+      copy:
         src: "index-template.html"
         dest: "/var/www/{{ http_host }}/index.html"
 
     - name: Set Up Virtual Host Configuration
-      template:
+      copy:
         src: "apache-template.conf"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
 
