@@ -94,12 +94,12 @@
 
     - name: Copy Index File
       template:
-        src: "index-template.html"
+        src: "files/index-template.html"
         dest: "/var/www/{{ http_host }}/index.html"
 
     - name: Set Up Virtual Host Configuration
       template:
-        src: "apache-template.conf"
+        src: "files/apache-template.conf"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
 
     - name: Enable Site
