@@ -1,6 +1,8 @@
 - name: PlayBook 1 - Nginx Installation
   hosts: Nginx-Servers
   become: true
+  vars:
+    nginx_custom_config: files/nginx.conf
   tasks:
     - name: Install Nginx Web Server
       apt:
@@ -13,6 +15,51 @@
         name: nginx
         state: started
         enabled: yes
+
+    - name: Copy custom Nginx config
+      copy:
+          src: "{{ nginx_custom_config }}"
+          dest: /etc/nginx/nginx.conf
+          owner: root
+          group: root
+          mode: 0644
+      notify: Reload Nginx
+
+    - name: Deploy custom index.html to Nginx web root
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Remove default Nginx site
+      file:
+          path: /etc/nginx/sites-enabled/default
+          state: absent
+      notify: Reload Nginx
+
+    - name: Deploy custom site config
+      copy:
+        src: files/my_site.conf
+        dest: /etc/nginx/sites-available/my_site.conf
+      notify: Reload Nginx
+
+    - name: Enable custom site
+      file:
+        src: /etc/nginx/sites-available/my_site.conf
+        dest: /etc/nginx/sites-enabled/my_site.conf
+        state: link
+        force: true
+      notify: Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
+
 
 - name: PlayBook 2 - MySQL Setup
   hosts: Mysql-Servers
